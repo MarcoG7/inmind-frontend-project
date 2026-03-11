@@ -1,0 +1,31 @@
+<a [routerLink]="['/shop', product().id]" class="product-card">
+  <div class="product-card-image-section">
+    <img [src]="product().image" [alt]="product().title" class="product-card-image" />
+
+    <div class="product-card-actions">
+      <button
+        class="product-card-action-btn"
+        title="Add to wishlist"
+        (click)="onAddToWishlist($event)"
+      >
+        <img src="svg_icons/heart.svg" alt="Add to Wishlist" />
+      </button>
+      <button class="product-card-action-btn" title="Add to cart" (click)="onAddToCart($event)">
+        <img src="svg_icons/shopping-cart.svg" alt="Add to Cart" />
+      </button>
+    </div>
+  </div>
+
+  <div class="product-card-info">
+    <h3 class="product-card-name">{{ product().title }}</h3>
+    <div class="product-card-meta">
+      <div class="product-card-rating">
+        @for (filled of starsFilled(); track $index) {
+          <span class="product-card-star" [class.filled]="filled">&#9733;</span>
+        }
+        <span class="product-card-rating-value">{{ product().rating.rate }}</span>
+      </div>
+      <span class="product-card-price">${{ product().price.toFixed(2) }}</span>
+    </div>
+  </div>
+</a>

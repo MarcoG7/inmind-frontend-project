@@ -1,0 +1,216 @@
+<div class="profile">
+  <!-- Page Header -->
+  <div class="profile-header">
+    <h1 class="profile-title">My Profile</h1>
+    <p class="profile-subtitle">Manage your account settings and preferences</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="profile-tabs">
+    <button
+      class="profile-tab"
+      [class.profile-tab-active]="activeTab() === 'details'"
+      (click)="activeTab.set('details')"
+    >
+      Account Details
+    </button>
+    <button
+      class="profile-tab"
+      [class.profile-tab-active]="activeTab() === 'payment'"
+      (click)="activeTab.set('payment')"
+    >
+      Payment Methods
+    </button>
+  </div>
+
+  <!-- Account Details Tab -->
+  @if (activeTab() === 'details') {
+    <form [formGroup]="profileForm" (ngSubmit)="saveModifications()">
+      <!-- Personal Information -->
+      <div class="profile-section">
+        <div class="profile-section-header">
+          <div>
+            <h2 class="profile-section-title">Personal Information</h2>
+            <p class="profile-section-sub">Update your personal details</p>
+          </div>
+          @if (!isEditing()) {
+            <button type="button" class="profile-edit-btn" (click)="startEdit()">Edit</button>
+          }
+        </div>
+
+        <div class="profile-fields">
+          <div class="profile-field">
+            <label class="profile-field-label">Full Name</label>
+            @if (isEditing()) {
+              <input
+                class="profile-field-input"
+                formControlName="fullName"
+                placeholder="John Smith"
+                type="text"
+              />
+            } @else {
+              <p class="profile-field-value">{{ profileForm.get('fullName')?.value || '-' }}</p>
+            }
+          </div>
+
+          <div class="profile-field">
+            <label class="profile-field-label">Email Address</label>
+            @if (isEditing()) {
+              <input
+                class="profile-field-input"
+                formControlName="email"
+                placeholder="you@example.com"
+                type="email"
+              />
+            } @else {
+              <p class="profile-field-value">{{ profileForm.get('email')?.value || '-' }}</p>
+            }
+          </div>
+
+          <div class="profile-field profile-field-full">
+            <label class="profile-field-label">Phone Number</label>
+            @if (isEditing()) {
+              <input
+                class="profile-field-input profile-field-input-half"
+                formControlName="phone"
+                placeholder="+961 12 345 678"
+                type="tel"
+              />
+            } @else {
+              <p class="profile-field-value">{{ profileForm.get('phone')?.value || '-' }}</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping Address -->
+      <div class="profile-section">
+        <h2 class="profile-section-title">Shipping Address</h2>
+
+        <div class="profile-fields">
+          <div class="profile-field profile-field-full">
+            <label class="profile-field-label">Street Address</label>
+            @if (isEditing()) {
+              <input
+                class="profile-field-input"
+                formControlName="street"
+                placeholder="123 Street"
+                type="text"
+              />
+            } @else {
+              <p class="profile-field-value">{{ profileForm.get('street')?.value || '-' }}</p>
+            }
+          </div>
+
+          <div class="profile-field">
+            <label class="profile-field-label">City</label>
+            @if (isEditing()) {
+              <input
+                class="profile-field-input"
+                formControlName="city"
+                placeholder="Beirut"
+                type="text"
+              />
+            } @else {
+              <p class="profile-field-value">{{ profileForm.get('city')?.value || '-' }}</p>
+            }
+          </div>
+
+          <div class="profile-field">
+            <label class="profile-field-label">State</label>
+            @if (isEditing()) {
+              <input
+                class="profile-field-input"
+                formControlName="state"
+                placeholder="BEY"
+                type="text"
+              />
+            } @else {
+              <p class="profile-field-value">{{ profileForm.get('state')?.value || '-' }}</p>
+            }
+          </div>
+
+          <div class="profile-field">
+            <label class="profile-field-label">ZIP Code</label>
+            @if (isEditing()) {
+              <input
+                class="profile-field-input"
+                formControlName="zip"
+                placeholder="XXXX"
+                type="text"
+              />
+            } @else {
+              <p class="profile-field-value">{{ profileForm.get('zip')?.value || '-' }}</p>
+            }
+          </div>
+
+          <div class="profile-field">
+            <label class="profile-field-label">Country</label>
+            @if (isEditing()) {
+              <input
+                class="profile-field-input"
+                formControlName="country"
+                placeholder="Lebanon"
+                type="text"
+              />
+            } @else {
+              <p class="profile-field-value">{{ profileForm.get('country')?.value || '-' }}</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      @if (isEditing()) {
+        <div class="profile-edit-actions">
+          <button type="submit" class="profile-save-btn">Save Changes</button>
+          <button type="button" class="profile-cancel-btn" (click)="cancelEdit()">Cancel</button>
+        </div>
+      }
+    </form>
+  }
+
+  <!-- Payment Methods Tab -->
+  @if (activeTab() === 'payment') {
+    <div class="profile-section">
+      <div class="profile-section-header">
+        <div>
+          <h2 class="profile-section-title">Payment Methods</h2>
+          <p class="profile-section-sub">Manage your saved payment methods</p>
+        </div>
+        <button class="profile-add-btn">Add Payment Method</button>
+      </div>
+
+      <div class="profile-cards">
+        @for (method of paymentMethods(); track method.id) {
+          <div class="profile-card">
+            <div class="profile-card-icon">
+              <span class="profile-card-brand">{{ method.brand }}</span>
+            </div>
+            <div class="profile-card-info">
+              <span class="profile-card-number">•••• •••• •••• {{ method.last4 }}</span>
+              <span class="profile-card-expiry">Expires {{ method.expiry }}</span>
+            </div>
+            @if (method.isDefault) {
+              <span class="profile-card-badge">Default</span>
+            }
+            <div class="profile-card-actions">
+              @if (!method.isDefault) {
+                <button class="profile-card-btn" (click)="setDefault(method.id)">
+                  Set as Default
+                </button>
+              }
+              <button
+                class="profile-card-btn profile-card-btn-remove"
+                (click)="removeMethod(method.id)"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        } @empty {
+          <p class="profile-cards-empty">No payment methods saved.</p>
+        }
+      </div>
+    </div>
+  }
+</div>

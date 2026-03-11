@@ -1,0 +1,53 @@
+<div class="wishlist">
+  <h1 class="wishlist-title">My Wishlist</h1>
+
+  @if (wishListService.wishListItems().length === 0) {
+    <div class="wishlist-empty">
+      <img src="svg_icons/heart-big.svg" />
+      <p class="wishlist-empty-text">Your wishlist is empty.</p>
+      <a routerLink="/shop" class="wishlist-empty-btn">Browse Products</a>
+    </div>
+  } @else {
+    <p class="wishlist-count">
+      {{ wishListService.wishListItems().length }} saved item{{
+        wishListService.wishListItems().length !== 1 ? 's' : ''
+      }}
+    </p>
+
+    <div class="wishlist-grid">
+      @for (item of wishListService.wishListItems(); track item.product.id) {
+        <div class="wishlist-card">
+          <a [routerLink]="['/shop', item.product.id]" class="wishlist-card-img">
+            <img [src]="item.product.image" [alt]="item.product.title" />
+          </a>
+
+          <div class="wishlist-card-info">
+            <p class="wishlist-card-category">{{ item.product.category }}</p>
+            <a [routerLink]="['/shop', item.product.id]" class="wishlist-card-name">
+              {{ item.product.title }}
+            </a>
+            <div class="wishlist-card-rating">
+              <span class="wishlist-card-star">&#9733;</span>
+              <span class="wishlist-card-rating-value">{{ item.product.rating.rate }}</span>
+              <span class="wishlist-card-rating-count">({{ item.product.rating.count }})</span>
+            </div>
+            <p class="wishlist-card-price">${{ item.product.price.toFixed(2) }}</p>
+
+            <div class="wishlist-card-actions">
+              <button class="wishlist-card-add-btn" (click)="moveToCart(item.product)">
+                Move to Cart
+              </button>
+              <button
+                class="wishlist-card-remove-btn"
+                title="Remove from wishlist"
+                (click)="removeItem(item.product.id)"
+              >
+                <img src="svg_icons/trash.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

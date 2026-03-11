@@ -1,0 +1,117 @@
+@if (product()) {
+  <div class="product-detail">
+    <!-- Main layout -->
+    <div class="product-detail-main">
+      <!-- Images -->
+      <div class="product-detail-images">
+        <div class="product-detail-main-img">
+          <img [src]="thumbnails()[selectedImageIndex()]" [alt]="product()!.title" />
+        </div>
+        <div class="product-detail-thumbs">
+          @for (thumb of thumbnails(); track $index) {
+            <div
+              class="product-detail-thumb"
+              [class.active]="selectedImageIndex() === $index"
+              (click)="selectedImageIndex.set($index)"
+            >
+              <img [src]="thumb" alt="Thumbnail" />
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="product-detail-info">
+        <span class="product-detail-category">{{ product()!.category | titlecase }}</span>
+        <h1 class="product-detail-name">{{ product()!.title }}</h1>
+
+        <div class="product-detail-rating">
+          @for (filled of starsFilled(); track $index) {
+            <span class="product-detail-star" [class.filled]="filled">&#9733;</span>
+          }
+          <span class="product-detail-rating-text">
+            {{ product()!.rating.rate }} ({{ product()!.rating.count }} reviews)
+          </span>
+        </div>
+
+        <div class="product-detail-price">${{ product()!.price.toFixed(2) }}</div>
+
+        <p class="product-detail-desc">{{ product()!.description }}</p>
+
+        <!-- Size -->
+        <div class="product-detail-option">
+          <span class="product-detail-option-label">Size</span>
+          <div class="product-detail-option-btns">
+            @for (size of sizes; track size) {
+              <button
+                class="product-detail-option-btn"
+                [class.active]="selectedSize() === size"
+                (click)="selectedSize.set(size)"
+              >
+                {{ size }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Color -->
+        <div class="product-detail-option">
+          <span class="product-detail-option-label">Color</span>
+          <div class="product-detail-option-btns">
+            @for (color of colors; track color) {
+              <button
+                class="product-detail-option-btn"
+                [class.active]="selectedColor() === color"
+                (click)="selectedColor.set(color)"
+              >
+                {{ color }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Quantity -->
+        <div class="product-detail-option">
+          <span class="product-detail-option-label">Quantity</span>
+          <div class="product-detail-qty">
+            <button class="product-detail-qty-btn" (click)="decrement()">-</button>
+            <span class="product-detail-qty-value">{{ quantity() }}</span>
+            <button class="product-detail-qty-btn" (click)="increment()">+</button>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="product-detail-cta">
+          <button class="product-detail-add-btn" (click)="addToCart()">Add to Cart</button>
+          <button
+            class="product-detail-wishlist-btn"
+            title="Add to wishlist"
+            (click)="addToWishList()"
+          >
+            <img src="svg_icons/heart.svg" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- You May Also Like -->
+    @if (relatedProducts().length > 0) {
+      <section class="product-detail-related">
+        <h2 class="product-detail-related-title">You May Also Like</h2>
+        <div class="product-detail-related-grid">
+          @for (p of relatedProducts(); track p.id) {
+            <app-product-card
+              [product]="p"
+              (addToCart)="cartService.addToCart($event)"
+              (addToWishlist)="wishListService.addToWishList($event)"
+            />
+          }
+        </div>
+      </section>
+    }
+  </div>
+} @else {
+  <div class="product-detail-loading">
+    <div class="product-detail-spinner"></div>
+  </div>
+}

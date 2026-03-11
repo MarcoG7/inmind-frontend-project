@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-accent: #c9a227;
+  --color-bg-light: #f5f4f0;
+  --color-bg-dark: #1a1a2a;
+}
+
+html {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  color: #1a1a1a;
+  background-color: #fff;
+}

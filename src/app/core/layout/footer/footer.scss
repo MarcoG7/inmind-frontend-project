@@ -1,0 +1,92 @@
+.footer {
+  background-color: #1a1a2a;
+  color: rgba(255, 255, 255, 0.75);
+
+  &-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 48px;
+    padding: 56px 80px 40px;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    width: 80px;
+  }
+
+  &-tagline {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+  }
+
+  &-col-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+  }
+
+  &-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    a {
+      color: rgba(255, 255, 255, 0.55);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  &-socials {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    a {
+      color: rgba(255, 255, 255, 0.55);
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  &-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 80px;
+    text-align: center;
+
+    p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+      margin: 0;
+    }
+  }
+}

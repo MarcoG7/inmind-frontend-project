@@ -1,0 +1,95 @@
+<div class="auth-layout">
+  <!-- Side Panel -->
+  <div class="auth-layout-brand">
+    <div class="auth-layout-brand-content">
+      <img src="logo.png" alt="logo" class="auth-layout-logo" />
+      <h2 class="auth-layout-tagline">[This is the tagline]<br />[This is another line]</h2>
+      <p class="auth-layout-sub">[This is more text for describing the business]</p>
+    </div>
+  </div>
+
+  <!-- Form Panel -->
+  <div class="auth-layout-form-panel">
+    <div class="auth-card">
+      <h1 class="auth-card-title">Welcome back</h1>
+      <p class="auth-card-subtitle">Sign in to your account</p>
+
+      @if (error()) {
+        <div class="auth-card-error" role="alert">{{ error() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form" novalidate>
+        <!-- Email -->
+        <div
+          class="auth-form-field"
+          [class.auth-form-field--error]="form.get('email')?.invalid && form.get('email')?.touched"
+        >
+          <label class="auth-form-label" for="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="auth-form-input"
+            placeholder="you@example.com"
+            autocomplete="email"
+          />
+          @if (form.get('email')?.errors?.['required'] && form.get('email')?.touched) {
+            <span class="auth-form-error-msg">Email is required</span>
+          } @else if (form.get('email')?.errors?.['email'] && form.get('email')?.touched) {
+            <span class="auth-form-error-msg">Enter a valid email address</span>
+          }
+        </div>
+
+        <!-- Password -->
+        <div
+          class="auth-form-field"
+          [class.auth-form-field--error]="
+            form.get('password')?.invalid && form.get('password')?.touched
+          "
+        >
+          <label class="auth-form-label" for="password">Password</label>
+          <div class="auth-form-input-wrapper">
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              class="auth-form-input"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+            <button
+              type="button"
+              class="auth-form-toggle-pass"
+              (click)="togglePassword()"
+              tabindex="-1"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+            >
+              @if (showPassword()) {
+                <img src="svg_icons/eye-off.svg" />
+              } @else {
+                <img src="svg_icons/eye.svg" />
+              }
+            </button>
+          </div>
+          @if (form.get('password')?.errors?.['required'] && form.get('password')?.touched) {
+            <span class="auth-form-error-msg">Password is required</span>
+          }
+        </div>
+
+        <button type="submit" class="auth-form-submit" [disabled]="loading()">
+          @if (loading()) {
+            <span class="auth-form-spinner"></span>
+            Signing in...
+          } @else {
+            Sign In
+          }
+        </button>
+      </form>
+
+      <p class="auth-card-footer">
+        Don't have an account?
+        <a routerLink="/signup" class="auth-card-link">Create one</a>
+      </p>
+    </div>
+  </div>
+</div>

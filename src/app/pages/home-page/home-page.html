@@ -1,0 +1,42 @@
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">New Arrivals</h1>
+    <p class="hero-subtitle">Discover our new products</p>
+    <a routerLink="/shop" class="hero-btn">Shop Now</a>
+  </div>
+</section>
+
+<section class="categories">
+  <h2 class="categories-title">Shop by Category</h2>
+
+  <div class="categories-grid">
+    @for (category of categories(); track category) {
+      <a [routerLink]="['/shop']" [queryParams]="{ category: category }" class="category-card">
+        <div class="category-card-img-wrapper">
+          <img [src]="getCategoryImage(category)" [alt]="category" class="category-card-img" />
+        </div>
+        <div class="category-card-overlay">
+          <span class="category-card-label">{{ category | titlecase }}</span>
+        </div>
+      </a>
+    }
+  </div>
+</section>
+
+<section class="featured">
+  <h2 class="featured-title">Featured Products</h2>
+
+  <div class="featured-grid">
+    @for (product of featuredProducts(); track product.id) {
+      <app-product-card
+        [product]="product"
+        (addToCart)="addToCart($event)"
+        (addToWishlist)="addToWishList($event)"
+      />
+    }
+  </div>
+
+  <div class="featured-footer">
+    <a routerLink="/shop" class="featured-view-all">View All Products &#8594;</a>
+  </div>
+</section>

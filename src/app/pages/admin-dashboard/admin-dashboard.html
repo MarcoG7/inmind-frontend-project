@@ -1,0 +1,53 @@
+<div class="admin">
+  <h1 class="admin-title">Admin Dashboard</h1>
+
+  <div class="admin-cards">
+    <div class="admin-card">
+      <span class="admin-card-label">Total Products</span>
+      <span class="admin-card-value">{{ allProducts().length }}</span>
+    </div>
+    <div class="admin-card">
+      <span class="admin-card-label">Categories</span>
+      <span class="admin-card-value">{{ categoryStats().length }}</span>
+    </div>
+    <div class="admin-card">
+      <span class="admin-card-label">Avg. Price</span>
+      <span class="admin-card-value">${{ avgPrice() }}</span>
+    </div>
+    <div class="admin-card">
+      <span class="admin-card-label">Total Reviews</span>
+      <span class="admin-card-value">{{ totalReviews() }}</span>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    <div class="admin-table">
+      <h2 class="admin-section-title">Products</h2>
+      <ag-grid-angular
+        style="width: 100%; height: 460px"
+        [rowData]="allProducts()"
+        [columnDefs]="colDefs"
+        [defaultColDef]="defaultColDef"
+        [pagination]="pagination"
+        [paginationPageSize]="paginationPageSize"
+        [paginationPageSizeSelector]="paginationPageSizeSelector"
+        [theme]="theme"
+      />
+    </div>
+
+    <aside class="admin-sidebar">
+      <h2 class="admin-section-title">By Category</h2>
+      @for (cat of categoryStats(); track cat.name) {
+        <div class="admin-stat">
+          <div class="admin-stat-row">
+            <span class="admin-stat-name">{{ cat.name }}</span>
+            <span class="admin-stat-count">{{ cat.count }}</span>
+          </div>
+          <div class="admin-stat-bar">
+            <div class="admin-stat-fill" [style.width.%]="cat.percent"></div>
+          </div>
+        </div>
+      }
+    </aside>
+  </div>
+</div>

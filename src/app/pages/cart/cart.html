@@ -1,0 +1,97 @@
+<div class="cart">
+  <h1 class="cart-title">Shopping Cart</h1>
+
+  @if (cartService.cartItems().length === 0) {
+    <div class="cart-empty">
+      <img src="svg_icons/shopping-cart-big.svg" />
+      <p class="cart-empty-text">Your cart is empty.</p>
+      <a routerLink="/shop" class="cart-empty-btn">Continue Shopping</a>
+    </div>
+  } @else {
+    <div class="cart-body">
+      <!-- Cart Items -->
+      <div class="cart-items">
+        @for (item of cartService.cartItems(); track item.product.id) {
+          <div class="cart-item">
+            <a [routerLink]="['/shop', item.product.id]" class="cart-item-img">
+              <img [src]="item.product.image" [alt]="item.product.title" />
+            </a>
+
+            <div class="cart-item-details">
+              <a [routerLink]="['/shop', item.product.id]" class="cart-item-name">
+                {{ item.product.title }}
+              </a>
+              <p class="cart-item-category">{{ item.product.category }}</p>
+              @if (item.size || item.color) {
+                <p class="cart-item-options">
+                  @if (item.size) {
+                    <span>Size: {{ item.size }}</span>
+                  }
+                  @if (item.color) {
+                    <span>Color: {{ item.color }}</span>
+                  }
+                </p>
+              }
+            </div>
+
+            <div class="cart-item-qty">
+              <button class="cart-item-qty-btn" (click)="decrement(item)">-</button>
+              <span class="cart-item-qty-value">{{ item.quantity }}</span>
+              <button class="cart-item-qty-btn" (click)="increment(item)">+</button>
+            </div>
+
+            <div class="cart-item-price">
+              <span class="cart-item-price-total">
+                ${{ (item.product.price * item.quantity).toFixed(2) }}
+              </span>
+              <span class="cart-item-price-each">${{ item.product.price.toFixed(2) }} each</span>
+            </div>
+
+            <button class="cart-item-remove" title="Remove item" (click)="removeItem(item)">
+              <img src="svg_icons/trash.svg" />
+            </button>
+          </div>
+        }
+
+        <div class="cart-clear">
+          <button class="cart-clear-btn" (click)="cartService.clearCart()">Clear Cart</button>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <aside class="cart-summary">
+        <h2 class="cart-summary-title">Order Summary</h2>
+
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span>${{ subtotal.toFixed(2) }}</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Shipping</span>
+          <span class="cart-summary-free">FREE</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Tax ({{ taxRate * 100 }}%)</span>
+          <span>${{ tax.toFixed(2) }}</span>
+        </div>
+
+        <div class="cart-summary-total">
+          <span>Total</span>
+          <span>${{ total.toFixed(2) }}</span>
+        </div>
+
+        <button class="cart-summary-checkout">Proceed to Checkout &rarr;</button>
+        <a routerLink="/shop" class="cart-summary-continue">Continue Shopping</a>
+
+        <div class="cart-summary-payment">
+          <p class="cart-summary-payment-title">Accepted Payment Methods</p>
+          <div class="cart-summary-payment-methods">
+            <span class="cart-payment-badge">VISA</span>
+            <span class="cart-payment-badge">MasterCard</span>
+            <span class="cart-payment-badge">Whish Money</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  }
+</div>

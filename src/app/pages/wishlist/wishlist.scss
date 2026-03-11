@@ -1,0 +1,201 @@
+.wishlist {
+  padding: 40px 80px 64px;
+
+  &-title {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+  }
+
+  &-count {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0 0 32px;
+  }
+
+  // ===== EMPTY STATE =====
+  &-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+    gap: 16px;
+  }
+
+  &-empty-icon {
+    color: #ddd;
+  }
+
+  &-empty-text {
+    font-size: 1.1rem;
+    color: #888;
+    margin: 0;
+  }
+
+  &-empty-btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--color-bg-dark);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 2px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #111;
+    }
+  }
+
+  // ===== WISHLIST GRID =====
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &-card {
+    display: flex;
+    flex-direction: column;
+
+    &-img {
+      display: block;
+      aspect-ratio: 3 / 4;
+      background-color: #f8f4f0;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      text-decoration: none;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 16px;
+        box-sizing: border-box;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover img {
+        transform: scale(1.04);
+      }
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    &-category {
+      font-size: 0.72rem;
+      color: #999;
+      text-transform: capitalize;
+      margin: 0;
+      letter-spacing: 0.04em;
+    }
+
+    &-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #222;
+      text-decoration: none;
+      line-height: 1.4;
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+
+    &-rating {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    &-star {
+      color: var(--color-accent);
+      font-size: 0.82rem;
+    }
+
+    &-rating-value {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #444;
+    }
+
+    &-rating-count {
+      font-size: 0.76rem;
+      color: #aaa;
+    }
+
+    &-price {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 4px 0 8px;
+    }
+
+    &-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    &-add-btn {
+      flex: 1;
+      padding: 8px 12px;
+      background: var(--color-bg-dark);
+      color: #fff;
+      border: none;
+      border-radius: 2px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #111;
+      }
+    }
+
+    &-remove-btn {
+      width: 34px;
+      height: 34px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #aaa;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      transition:
+        color 0.2s,
+        border-color 0.2s;
+
+      &:hover {
+        color: #e55;
+        border-color: #e55;
+      }
+    }
+  }
+}

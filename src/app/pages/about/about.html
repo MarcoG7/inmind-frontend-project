@@ -1,0 +1,61 @@
+<section class="about-hero">
+  <div class="about-hero-content">
+    <span class="about-hero-label">Our Story</span>
+    <h1 class="about-hero-title">Crafted with Intention,<br />Worn with Confidence</h1>
+    <p class="about-hero-subtitle">
+      A curated destination for those who appreciate quality, elegance, and timeless style.
+    </p>
+    <a routerLink="/shop" class="about-hero-btn">Explore the Collection</a>
+  </div>
+</section>
+
+<section class="about-story">
+  <div class="about-story-text">
+    <span class="about-section-label">Who We Are</span>
+    <h2 class="about-section-title">More Than a Store</h2>
+    <p class="about-story-body">
+      Founded with a passion for thoughtful fashion, Logo was born from the belief that what you
+      wear should reflect who you are. We started as a small boutique with a simple mission: make
+      exceptional style accessible without compromise.
+    </p>
+    <p class="about-story-body">
+      Today, we partner with artisans and established brands across the globe to bring you a
+      carefully edited selection — from wardrobe essentials to statement pieces — each chosen for
+      its quality, design, and lasting value.
+    </p>
+    <a routerLink="/contact" class="about-story-link">Get in touch &rarr;</a>
+  </div>
+  <div class="about-story-visual">
+    <div class="about-story-img-block about-story-img-block--top"></div>
+    <div class="about-story-img-block about-story-img-block--bottom"></div>
+  </div>
+</section>
+
+<section class="about-stats">
+  @for (stat of stats; track stat.label) {
+    <div class="about-stat">
+      <span class="about-stat-value">{{ stat.value }}</span>
+      <span class="about-stat-label">{{ stat.label }}</span>
+    </div>
+  }
+</section>
+
+<section class="about-values">
+  <span class="about-section-label">What Drives Us</span>
+  <h2 class="about-section-title">Our Core Values</h2>
+  <div class="about-values-grid">
+    @for (value of values; track value.title) {
+      <div class="about-value-card">
+        <span class="about-value-number">{{ value.number }}</span>
+        <h3 class="about-value-title">{{ value.title }}</h3>
+        <p class="about-value-desc">{{ value.description }}</p>
+      </div>
+    }
+  </div>
+</section>
+
+<section class="about-cta">
+  <h2 class="about-cta-title">Ready to discover your style?</h2>
+  <p class="about-cta-sub">Browse our latest collection and find pieces made for you.</p>
+  <a routerLink="/shop" class="about-cta-btn">Shop Now</a>
+</section>

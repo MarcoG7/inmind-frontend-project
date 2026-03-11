@@ -1,0 +1,207 @@
+<div class="auth-layout">
+  <!-- Side Panel -->
+  <div class="auth-layout-brand">
+    <div class="auth-layout-brand-content">
+      <img src="logo.png" alt="logo" class="auth-layout-logo" />
+      <h2 class="auth-layout-tagline">[This is the tagline]<br />[This is another line]</h2>
+      <p class="auth-layout-sub">[This is more text for describing the business]</p>
+    </div>
+  </div>
+
+  <!-- Form Panel -->
+  <div class="auth-layout-form-panel">
+    <div class="auth-card">
+      @if (isAdminMode()) {
+        <div class="auth-card-admin-banner">⚙ Admin Registration Mode</div>
+      }
+      <h1 class="auth-card-title">Create an account</h1>
+      <p class="auth-card-subtitle">Start your journey today</p>
+
+      @if (error()) {
+        <div class="auth-card-error" role="alert">{{ error() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form" novalidate>
+        <!-- First Name -->
+        <div
+          class="auth-form-field"
+          [class.auth-form-field--error]="form.get('firstName')?.invalid && form.get('firstName')?.touched"
+        >
+          <label class="auth-form-label" for="firstName">First name</label>
+          <input
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            class="auth-form-input"
+            placeholder="Jane"
+            autocomplete="given-name"
+          />
+          @if (form.get('firstName')?.errors?.['required'] && form.get('firstName')?.touched) {
+            <span class="auth-form-error-msg">First name is required</span>
+          } @else if (form.get('firstName')?.errors?.['minlength'] && form.get('firstName')?.touched) {
+            <span class="auth-form-error-msg">Must be at least 2 characters</span>
+          }
+        </div>
+
+        <!-- Last Name -->
+        <div
+          class="auth-form-field"
+          [class.auth-form-field--error]="form.get('lastName')?.invalid && form.get('lastName')?.touched"
+        >
+          <label class="auth-form-label" for="lastName">Last name</label>
+          <input
+            id="lastName"
+            type="text"
+            formControlName="lastName"
+            class="auth-form-input"
+            placeholder="Doe"
+            autocomplete="family-name"
+          />
+          @if (form.get('lastName')?.errors?.['required'] && form.get('lastName')?.touched) {
+            <span class="auth-form-error-msg">Last name is required</span>
+          } @else if (form.get('lastName')?.errors?.['minlength'] && form.get('lastName')?.touched) {
+            <span class="auth-form-error-msg">Must be at least 2 characters</span>
+          }
+        </div>
+
+        <!-- Username -->
+        <div
+          class="auth-form-field"
+          [class.auth-form-field--error]="form.get('username')?.invalid && form.get('username')?.touched"
+        >
+          <label class="auth-form-label" for="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            class="auth-form-input"
+            placeholder="janedoe"
+            autocomplete="username"
+          />
+          @if (form.get('username')?.errors?.['required'] && form.get('username')?.touched) {
+            <span class="auth-form-error-msg">Username is required</span>
+          } @else if (form.get('username')?.errors?.['minlength'] && form.get('username')?.touched) {
+            <span class="auth-form-error-msg">Must be at least 3 characters</span>
+          }
+        </div>
+
+        <!-- Email -->
+        <div
+          class="auth-form-field"
+          [class.auth-form-field--error]="form.get('email')?.invalid && form.get('email')?.touched"
+        >
+          <label class="auth-form-label" for="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="auth-form-input"
+            placeholder="you@example.com"
+            autocomplete="email"
+          />
+          @if (form.get('email')?.errors?.['required'] && form.get('email')?.touched) {
+            <span class="auth-form-error-msg">Email is required</span>
+          } @else if (form.get('email')?.errors?.['email'] && form.get('email')?.touched) {
+            <span class="auth-form-error-msg">Enter a valid email address</span>
+          }
+        </div>
+
+        <!-- Password -->
+        <div
+          class="auth-form-field"
+          [class.auth-form-field--error]="
+            form.get('password')?.invalid && form.get('password')?.touched
+          "
+        >
+          <label class="auth-form-label" for="password">Password</label>
+          <div class="auth-form-input-wrapper">
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              class="auth-form-input"
+              placeholder="At least 8 characters"
+              autocomplete="new-password"
+            />
+            <button
+              type="button"
+              class="auth-form-toggle-pass"
+              (click)="togglePassword()"
+              tabindex="-1"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+            >
+              @if (showPassword()) {
+                <img src="svg_icons/eye-off.svg" />
+              } @else {
+                <img src="svg_icons/eye.svg" />
+              }
+            </button>
+          </div>
+          @if (form.get('password')?.errors?.['required'] && form.get('password')?.touched) {
+            <span class="auth-form-error-msg">Password is required</span>
+          } @else if (
+            form.get('password')?.errors?.['minlength'] && form.get('password')?.touched
+          ) {
+            <span class="auth-form-error-msg">Password must be at least 8 characters</span>
+          }
+        </div>
+
+        <!-- Confirm Password -->
+        <div
+          class="auth-form-field"
+          [class.auth-form-field--error]="
+            (form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched) ||
+            (form.errors?.['passwordMismatch'] && form.get('confirmPassword')?.touched)
+          "
+        >
+          <label class="auth-form-label" for="confirmPassword">Confirm password</label>
+          <div class="auth-form-input-wrapper">
+            <input
+              id="confirmPassword"
+              [type]="showConfirm() ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              class="auth-form-input"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+            />
+            <button
+              type="button"
+              class="auth-form-toggle-pass"
+              (click)="toggleConfirm()"
+              tabindex="-1"
+              [attr.aria-label]="showConfirm() ? 'Hide password' : 'Show password'"
+            >
+              @if (showPassword()) {
+                <img src="svg_icons/eye-off.svg" />
+              } @else {
+                <img src="svg_icons/eye.svg" />
+              }
+            </button>
+          </div>
+          @if (
+            form.get('confirmPassword')?.errors?.['required'] &&
+            form.get('confirmPassword')?.touched
+          ) {
+            <span class="auth-form-error-msg">Please confirm your password</span>
+          } @else if (form.errors?.['passwordMismatch'] && form.get('confirmPassword')?.touched) {
+            <span class="auth-form-error-msg">Passwords do not match</span>
+          }
+        </div>
+
+        <button type="submit" class="auth-form-submit" [disabled]="loading()">
+          @if (loading()) {
+            <span class="auth-form-spinner"></span>
+            Creating account...
+          } @else {
+            Create Account
+          }
+        </button>
+      </form>
+
+      <p class="auth-card-footer">
+        Already have an account?
+        <a routerLink="/login" class="auth-card-link">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>
