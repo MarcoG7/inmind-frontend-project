@@ -1,0 +1,15 @@
+services:
+  inmind-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inmind-container
+    ports:
+      - '4200:80'
+    networks:
+      - inmind-network
+    restart: unless-stopped
+
+networks:
+  inmind-network:
+    driver: bridge
