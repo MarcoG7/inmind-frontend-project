@@ -3,13 +3,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: inmind-container
+    container_name: inmind-container-compose
     ports:
       - '4200:80'
     networks:
-      - inmind-network
+      - inmind-network-compose
     restart: unless-stopped
 
 networks:
-  inmind-network:
+  inmind-network-compose:
     driver: bridge
