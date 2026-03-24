@@ -25,5 +25,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/inmind-project:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/inmind-project:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/inmind-project:latest
+            ${{ secrets.DOCKER_USERNAME }}/inmind-project:${{ github.sha }}
